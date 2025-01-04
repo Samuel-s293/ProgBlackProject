@@ -1,9 +1,10 @@
+button = document.getElementById("p1")
 
-
-window.addEventListener('click', function(event){
-   fetch('http://127.0.0.1:8080/msg')
+button.addEventListener('click', function(event){
+   fetch('http://127.0.0.1:8080/p1')
     .then(response => response.text())
-    .then(body => document.getElementById('content').innerHTML=body)
+    .then(body => document.getElementById('p1-tab').innerHTML=body)
     .catch((error)=> this.alert(error))
  });
+
 
