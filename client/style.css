@@ -1,0 +1,28 @@
+.navbar-brand h3 {
+    position: relative;
+    top: 8px;
+    left: 10px;
+  }
+
+.navbar-brand img {
+    float: left;
+    width: 50px;
+    height: 50px;
+  }
+
+.centered {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+.padding {
+    padding-bottom: 20px;
+}
+
+.carousel-item h1{
+    color: white;
+    font-size: 70px;
+    font-family: Georgia, serif;
+}

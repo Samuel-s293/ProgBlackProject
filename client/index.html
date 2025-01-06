@@ -3,16 +3,54 @@
 
     <head>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+        <link rel="stylesheet" href="style.css">
     </head>
-    
+
     <body>
+
+        <nav class="navbar bg-body-tertiary">
+            <div class="container-fluid">
+              <a class="navbar-brand">
+                <img src="Coat_of_Arms_of_Van_Mildert_College.png" alt="Logo" >
+                <h3>VM Hockey Stat Tracker</h3>
+              </a>
+            </div>
+          </nav>
+
+        <div id="carouselExample" class="carousel slide">
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <img src="HockeyBanner1.jpg" style="height: 300px; object-fit: cover;" class="d-block w-100" alt="Hockey Banner 1">
+                <h1 class="centered">Play</h1>
+              </div>
+              <div class="carousel-item">
+                <img src="HockeyBanner2.jpg" style="height: 300px; object-fit: cover;" class="d-block w-100" alt="Hockey Banner 2">
+                <h1 class="centered">Track</h1>
+              </div>
+              <div class="carousel-item">
+                <img src="HockeyBanner3.jpeg" style="height: 300px; object-fit: cover;" class="d-block w-100" alt="Hockey Banner 3">
+                <h1 class="centered">Compare</h1>
+              </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+
+        <div class="padding"></div>
+
         <div class="row">
             <div class="col-4">
               <div class="list-group" id="list-tab" role="tablist">
                 <a class="list-group-item list-group-item-action active" id="p1" data-bs-toggle="list" href="#p1-tab" role="tab" aria-controls="list-home">Samuel Singleton</a>
-                <a class="list-group-item list-group-item-action" id="p2" data-bs-toggle="list" href="#p2-tab" role="tab" aria-controls="list-profile"></a>
-                <a class="list-group-item list-group-item-action" id="p3" data-bs-toggle="list" href="#p3-tab" role="tab" aria-controls="list-messages"></a>
-                <a class="list-group-item list-group-item-action" id="p4" data-bs-toggle="list" href="#p4-tab" role="tab" aria-controls="list-settings"></a>
+                <a class="list-group-item list-group-item-action" id="p2" data-bs-toggle="list" href="#p2-tab" role="tab" aria-controls="list-profile">Tim</a>
+                <a class="list-group-item list-group-item-action" id="p3" data-bs-toggle="list" href="#p3-tab" role="tab" aria-controls="list-messages">Jake</a>
+                <a class="list-group-item list-group-item-action" id="p4" data-bs-toggle="list" href="#p4-tab" role="tab" aria-controls="list-settings">Jacob</a>
               </div>
             </div>
             <div class="col-8">
@@ -27,6 +65,20 @@
               </div>
             </div>
           </div>
+          
+        <div class="padding"></div>
+
+        <div class="card text-center">
+            <div class="card-header">End of Page</div>
+            <div class="card-body">
+              <h5 class="card-title">Created by Samuel Singleton</h5>
+              <p class="card-text">As part of the best programming black project of all time</p>
+              <a href="" class="btn btn-primary">Back to top</a>
+            </div>
+            <div class="card-footer text-body-secondary">
+              Stats last updated: 1 day ago
+            </div>
+        </div>
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
         <script src="client.js"></script>
