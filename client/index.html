@@ -47,7 +47,7 @@
         <div class="row">
             <div class="col-4">
               <div class="list-group" id="list-tab" role="tablist">
-                <a class="list-group-item list-group-item-action active" id="p1" data-bs-toggle="list" href="#p1-tab" role="tab" aria-controls="list-home">Samuel Singleton</a>
+                <a class="list-group-item list-group-item-action" id="p1" data-bs-toggle="list" href="#p1-tab" role="tab" aria-controls="list-home">Samuel Singleton</a>
                 <a class="list-group-item list-group-item-action" id="p2" data-bs-toggle="list" href="#p2-tab" role="tab" aria-controls="list-profile">Tim</a>
                 <a class="list-group-item list-group-item-action" id="p3" data-bs-toggle="list" href="#p3-tab" role="tab" aria-controls="list-messages">Jake</a>
                 <a class="list-group-item list-group-item-action" id="p4" data-bs-toggle="list" href="#p4-tab" role="tab" aria-controls="list-settings">Jacob</a>
@@ -64,7 +64,39 @@
                 <div class="tab-pane fade" id="p4-tab" role="tabpanel" aria-labelledby="p4">...</div>
               </div>
             </div>
+        </div>
+
+        <div class="container mt-5">
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addItemModal">
+              Add Player
+          </button>
+        </div>
+      
+        <div class="modal fade" id="addItemModal" tabindex="-1" aria-labelledby="addItemModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h5 class="modal-title" id="addItemModalLabel">Add Player</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                      <form id="add-item" method="post" class="needs-validation" novalidate>
+                          <div class="mb-3">
+                              <label for="name" class="form-label">Name</label>
+                              <input type="text" class="form-control" id="name" name="name" required>
+                              <div class="invalid-feedback">Please enter a player name.</div>
+                          </div>
+                          <div class="mb-3">
+                              <label for="goalsScored" class="form-label">Goals Scored</label>
+                              <input type="number" class="form-control" id="goalsScored" name="goalsScored" step="1" required>
+                              <div class="invalid-feedback">Please enter goals scored.</div>
+                          </div>
+                          <button type="submit" class="btn btn-primary">Add</button>
+                      </form>
+                  </div>
+              </div>
           </div>
+        </div>
           
         <div class="padding"></div>
 
