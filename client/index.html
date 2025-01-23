@@ -46,12 +46,12 @@
 
         <div class="row" id = "player-table">
             <div class="col-4">
-              <div class="list-group" id="list-tab" role="tablist">
+              <div class="list-group" id="list-players" role="tablist">
                 <a class="list-group-item list-group-item-action" id="p0" data-bs-toggle="list" href="#p0-tab" role="tab" aria-controls="list-home" style="display: none;"></a>
               </div>
             </div>
             <div class="col-8">
-              <div class="tab-content" id="nav-tabContent">
+              <div class="tab-content" id="tabContent-players">
                 <div class="tab-pane fade show active" id="p0-tab" role="tabpanel" aria-labelledby="p0"></div>
               </div>
             </div>
@@ -75,13 +75,20 @@
                           <div class="mb-3">
                               <label for="name" class="form-label">Name</label>
                               <input type="text" class="form-control" id="name" name="name" required>
-                              <div class="invalid-feedback">Please enter a player name.</div>
+                              <div class="invalid-feedback">Please enter player name.</div>
                           </div>
                           <div class="mb-3">
                               <label for="goalsScored" class="form-label">Goals Scored</label>
                               <input type="number" class="form-control" id="goalsScored" name="goalsScored" step="1" required>
                               <div class="invalid-feedback">Please enter goals scored.</div>
-                          
+                          </div>
+                          <h3>Team</h3>
+                          <div class="mb-3">
+                            <label for="team">Team A</label>
+                            <input type="radio" id="teamA" name="team" value="A">
+                            <label for="team">Team B</label>
+                            <input type="radio" id="teamB" name="team" value="B">
+                          </div>
                           <button type="submit" class="btn btn-primary">Add</button>
                       </form>
                   </div>
@@ -91,7 +98,21 @@
           
         <div class="padding"></div>
 
-        
+        <h3>Teams</h3>
+        <div class="padding"></div>
+
+        <div class="row" id = "team-table">
+          <div class="col-4">
+            <div class="list-group" id="list-teams" role="tablist">
+              <a class="list-group-item list-group-item-action" id="t0" data-bs-toggle="list" href="#t0-tab" role="tab" aria-controls="list-home" style="display: none;"></a>
+            </div>
+          </div>
+          <div class="col-8">
+            <div class="tab-content" id="tabContent-teams">
+              <div class="tab-pane fade show active" id="t0-tab" role="tabpanel" aria-labelledby="t0"></div>
+            </div>
+          </div>
+        </div>
 
 
         <div class="card text-center">

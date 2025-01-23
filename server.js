@@ -16,10 +16,10 @@ app.post("/api/player/add",  function(req, resp){
         }
     }
 
-    let itemName = req.body.name;
     let id = items.length + 1;
 
-    let newItem = {"id" : id, "name" : itemName, "goalsScored": req.body.goalsScored};
+
+    let newItem = {"id" : id, "name": req.body.name, "team": req.body.team, "goalsScored": req.body.goalsScored};
     console.log("New Item Added:");
     console.log(newItem);
 
@@ -37,7 +37,32 @@ app.get("/api/players", (req, res) => {
             res.status(500).json({ error: "Failed to load player data" });
             return;
         }
-        res.json(JSON.parse(data));
+        if (data) {
+            res.json(JSON.parse(data));
+        }
+    });
+});
+
+app.get("/api/teams", (req, res) => {
+    fs.readFile("./players.json", "utf8", (err, data) => {
+        if (err) {
+            res.status(500).json({ error: "Failed to load team data" });
+            return;
+        }
+        if (data) {
+            playerData = JSON.parse(data)
+            let teamData = {}
+            playerData.forEach(player => {
+                try{
+                    teamData[`${player.team}`].push(player.name)
+                }
+                catch (TypeError){
+                    teamData[`${player.team}`] = [player.name]
+                }
+
+            });
+            res.json(teamData);
+        }
     });
 });
 
