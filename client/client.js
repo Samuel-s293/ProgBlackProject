@@ -1,10 +1,12 @@
-const form = document.getElementById("add-item");
-const modal = new bootstrap.Modal(document.getElementById('addItemModal'));
-form.addEventListener("submit", async function (event) {
+const form1 = document.getElementById("add-player");
+const form2 = document.getElementById("create-team");
+const modal1 = new bootstrap.Modal(document.getElementById('addPlayerModal'));
+const modal2 = new bootstrap.Modal(document.getElementById('createTeamModal'));
+
+form1.addEventListener("submit", async function (event) {
     event.preventDefault();
-    const formData = new FormData(form);
+    const formData = new FormData(form1);
     const formJSON = JSON.stringify(Object.fromEntries(formData.entries()));
-    console.log(formJSON)
     console.log("Form data", formJSON);
     const response = await fetch("/api/player/add",{
         method: "post",
@@ -18,12 +20,36 @@ form.addEventListener("submit", async function (event) {
     loadTeams()
 
     if (response.ok){
-        modal.hide();
-        form.reset();
+        modal1.hide();
+        form1.reset();
     }
     console.log("ERROR", response)
 
 })
+
+form2.addEventListener("submit", async function (event) {
+    event.preventDefault();
+    const formData = new FormData(form2);
+    const formJSON = JSON.stringify(Object.fromEntries(formData.entries()));
+    console.log("Form data", formJSON);
+    const response = await fetch("/api/team/create",{
+        method: "post",
+        headers: {
+            "Content-Type": "application/json"
+          },
+        body: formJSON
+    })
+
+    loadTeams()
+
+    if (response.ok){
+        modal2.hide();
+        form2.reset();
+    }
+    console.log("ERROR", response)
+
+})
+
 
 function loadPlayerTable() {
     fetch("/api/players")
@@ -69,9 +95,11 @@ function loadTeams() {
         .then(teams => {
             const listGroup = document.getElementById("list-teams");
             const tabContent = document.getElementById("tabContent-teams");
+            const teamSelection = document.getElementById("teamSelection")
 
             listGroup.innerHTML = ""
             tabContent.innerHTML = ""
+            teamSelection.innerHTML = ""
 
             teamNames = Object.keys(teams)
             numOfTeams = teamNames.length
@@ -98,6 +126,10 @@ function loadTeams() {
                 listGroup.appendChild(listItem);
                 tabContent.appendChild(tabPane);
 
+                const option = document.createElement("div")
+                option.innerHTML = `<label for="team">${teamNames[i]}</label><input type="radio" id="team${teamNames[i]}" name="team" value="${teamNames[i]}">`
+
+                teamSelection.appendChild(option)
                 
 
             };

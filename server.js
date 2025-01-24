@@ -31,6 +31,29 @@ app.post("/api/player/add",  function(req, resp){
 })
 
 
+app.post("/api/team/create",  function(req, resp){
+
+    let items = [];
+    if (fs.existsSync("./teams.json")) {
+        let data = fs.readFileSync("./teams.json", "utf8");
+        if (data) {
+            items = JSON.parse(data);
+
+        }
+        else {
+            items = {}
+        }
+    }
+
+    items[`${req.body.name}`]=[];
+    console.log("New Team Added:");
+    console.log(req.body.name);
+    let itemsText = JSON.stringify(items);
+    fs.writeFileSync("./teams.json", itemsText);
+
+    resp.sendStatus(200)
+})
+
 app.get("/api/players", (req, res) => {
     fs.readFile("./players.json", "utf8", (err, data) => {
         if (err) {
@@ -49,17 +72,26 @@ app.get("/api/teams", (req, res) => {
             res.status(500).json({ error: "Failed to load team data" });
             return;
         }
+        if (fs.existsSync("./teams.json")) {
+            let data2 = fs.readFileSync("./teams.json", "utf8");
+            if (data2) {
+                teamData = JSON.parse(data2);
+                teamNames = Object.keys(teamData)
+                numOfTeams = teamNames.length
+                for (let i=0 ; i<numOfTeams; i++){
+                    team = teamNames[i]
+                    teamData[team] = []
+                }
+    
+            }
+        }
         if (data) {
             playerData = JSON.parse(data)
-            let teamData = {}
             playerData.forEach(player => {
-                try{
-                    teamData[`${player.team}`].push(player.name)
-                }
-                catch (TypeError){
-                    teamData[`${player.team}`] = [player.name]
-                }
-
+                teamData[`${player.team}`].push(player.name)
+            
+            let itemsText = JSON.stringify(teamData);
+            fs.writeFileSync("./teams.json", itemsText);
             });
             res.json(teamData);
         }

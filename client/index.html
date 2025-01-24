@@ -58,12 +58,12 @@
         </div>
 
         <div class="container mt-5">
-          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addItemModal">
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addPlayerModal">
               Add Player
           </button>
         </div>
       
-        <div class="modal fade" id="addItemModal" tabindex="-1" aria-labelledby="addItemModalLabel" aria-hidden="true">
+        <div class="modal fade" id="addPlayerModal" tabindex="-1" aria-labelledby="addItemModalLabel" aria-hidden="true">
           <div class="modal-dialog">
               <div class="modal-content">
                   <div class="modal-header">
@@ -71,7 +71,7 @@
                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
                   <div class="modal-body">
-                      <form id="add-item" method="post" class="needs-validation" novalidate>
+                      <form id="add-player" method="post" class="needs-validation" novalidate>
                           <div class="mb-3">
                               <label for="name" class="form-label">Name</label>
                               <input type="text" class="form-control" id="name" name="name" required>
@@ -83,11 +83,8 @@
                               <div class="invalid-feedback">Please enter goals scored.</div>
                           </div>
                           <h3>Team</h3>
-                          <div class="mb-3">
-                            <label for="team">Team A</label>
-                            <input type="radio" id="teamA" name="team" value="A">
-                            <label for="team">Team B</label>
-                            <input type="radio" id="teamB" name="team" value="B">
+                          <div class="mb-3" id="teamSelection">
+                            
                           </div>
                           <button type="submit" class="btn btn-primary">Add</button>
                       </form>
@@ -111,6 +108,33 @@
             <div class="tab-content" id="tabContent-teams">
               <div class="tab-pane fade show active" id="t0-tab" role="tabpanel" aria-labelledby="t0"></div>
             </div>
+          </div>
+        </div>
+
+        <div class="container mt-5">
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createTeamModal">
+              Create Team
+          </button>
+        </div>
+      
+        <div class="modal fade" id="createTeamModal" tabindex="-1" aria-labelledby="addItemModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h5 class="modal-title" id="addItemModalLabel">Create Team</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                      <form id="create-team" method="post" class="needs-validation" novalidate>
+                          <div class="mb-3">
+                              <label for="name" class="form-label">Name</label>
+                              <input type="text" class="form-control" id="name" name="name" required>
+                              <div class="invalid-feedback">Please enter team name.</div>
+                          </div>
+                          <button type="submit" class="btn btn-primary">Create</button>
+                      </form>
+                  </div>
+              </div>
           </div>
         </div>
 
