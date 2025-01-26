@@ -20,12 +20,43 @@ app.post("/api/player/add",  function(req, resp){
 
 
     let newItem = {"id" : id, "name": req.body.name, "team": req.body.team, "goalsScored": req.body.goalsScored};
-    console.log("New Item Added:");
+    console.log("New Player Added:");
     console.log(newItem);
 
     items.push(newItem);
     let itemsText = JSON.stringify(items);
     fs.writeFileSync("./players.json", itemsText);
+
+    resp.sendStatus(200)
+})
+
+
+
+app.post("/api/player/edit",  function(req, resp){
+
+    let players = [];
+    if (fs.existsSync("./players.json")) {
+        let data = fs.readFileSync("./players.json", "utf8");
+        if (data) {
+            players = JSON.parse(data);
+        }
+    }
+
+    let editedItem = {"id" : req.body.id, "name": req.body.name, "team": req.body.team, "goalsScored": req.body.goalsScored};
+    console.log("Player Edited:");
+    console.log(editedItem);
+
+
+    let count = 0
+    players.forEach (player =>{
+        if (player.id == req.body.id){
+            players[count] = editedItem
+            console.log(players)
+        }
+        count= count+1
+    })
+    let playersText = JSON.stringify(players);
+    fs.writeFileSync("./players.json", playersText);
 
     resp.sendStatus(200)
 })
@@ -63,6 +94,9 @@ app.get("/api/players", (req, res) => {
         if (data) {
             res.json(JSON.parse(data));
         }
+        else {
+            res.json([])
+        }
     });
 });
 
@@ -95,6 +129,10 @@ app.get("/api/teams", (req, res) => {
             });
             res.json(teamData);
         }
+        else {
+            res.json({})
+        }
+        
     });
 });
 

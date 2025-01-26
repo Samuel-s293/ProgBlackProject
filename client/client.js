@@ -1,7 +1,11 @@
 const form1 = document.getElementById("add-player");
 const form2 = document.getElementById("create-team");
+const editButton = document.getElementById("edit-button")
+const addButton = document.getElementById("add-button")
+const form3 = document.getElementById("edit-player");
 const modal1 = new bootstrap.Modal(document.getElementById('addPlayerModal'));
 const modal2 = new bootstrap.Modal(document.getElementById('createTeamModal'));
+const modal3 = new bootstrap.Modal(document.getElementById('editPlayerModal'));
 
 form1.addEventListener("submit", async function (event) {
     event.preventDefault();
@@ -18,6 +22,7 @@ form1.addEventListener("submit", async function (event) {
 
     loadPlayerTable()
     loadTeams()
+    editButtonVisibility()
 
     if (response.ok){
         modal1.hide();
@@ -41,10 +46,66 @@ form2.addEventListener("submit", async function (event) {
     })
 
     loadTeams()
+    addButtonVisibility()
 
     if (response.ok){
         modal2.hide();
         form2.reset();
+    }
+    console.log("ERROR", response)
+
+})
+
+editButton.addEventListener("click", function (event){
+    fetch("/api/players")
+        .then(response => response.json())
+        .then(players => {
+            const name = document.getElementById("player-name-edit")
+            const goalsScored = document.getElementById("goalsScored-edit")
+
+            players.forEach(player => {
+                const playerTab = document.getElementById(`p${player.id}`)
+                if (playerTab.classList == "list-group-item list-group-item-action active") {
+                    name.value = `${player.name}`
+                    goalsScored.value = `${player.goalsScored}`
+                    const teamOption = document.getElementById(`team${player.team}`)
+                    teamOption.checked = true
+                }
+            })
+        })
+})
+
+form3.addEventListener("submit", async function (event) {
+    event.preventDefault();
+    const formData = new FormData(form3);
+    let data = Object.fromEntries(formData.entries())
+    await fetch("/api/players")
+        .then(response => response.json())
+        .then(players => {
+
+            players.forEach(player => {
+                const playerTab = document.getElementById(`p${player.id}`)
+                if (playerTab.classList == "list-group-item list-group-item-action active") {
+                    data.id = player.id
+                }
+            })
+        })
+    const formJSON = JSON.stringify(data);
+    console.log("Form data", formJSON);
+    const response = await fetch("/api/player/edit",{
+        method: "post",
+        headers: {
+            "Content-Type": "application/json"
+          },
+        body: formJSON
+    })
+
+    loadPlayerTable()
+    loadTeams()
+
+    if (response.ok){
+        modal3.hide();
+        form3.reset();
     }
     console.log("ERROR", response)
 
@@ -78,6 +139,14 @@ function loadPlayerTable() {
                 tabPane.role = "tabpanel";
                 tabPane.innerHTML = `<h3>${player.name}</h3><p>Goals Scored: ${player.goalsScored}</p>`;
 
+                let index = players.indexOf(player)
+                if (index == 0) {
+                    listItem.classList.add("active")
+                    tabPane.classList.add("show")
+                    tabPane.classList.add("active")
+                    
+                }
+
                 // Append elements to the page
                 listGroup.appendChild(listItem);
                 tabContent.appendChild(tabPane);
@@ -96,10 +165,12 @@ function loadTeams() {
             const listGroup = document.getElementById("list-teams");
             const tabContent = document.getElementById("tabContent-teams");
             const teamSelection = document.getElementById("teamSelection")
+            const teamSelectionEdit = document.getElementById("teamSelection-edit")
 
             listGroup.innerHTML = ""
             tabContent.innerHTML = ""
             teamSelection.innerHTML = ""
+            teamSelectionEdit.innerHTML = ""
 
             teamNames = Object.keys(teams)
             numOfTeams = teamNames.length
@@ -130,6 +201,7 @@ function loadTeams() {
                 option.innerHTML = `<label for="team">${teamNames[i]}</label><input type="radio" id="team${teamNames[i]}" name="team" value="${teamNames[i]}">`
 
                 teamSelection.appendChild(option)
+                teamSelectionEdit.appendChild(option)
                 
 
             };
@@ -137,5 +209,41 @@ function loadTeams() {
         .catch(error => console.error("Error loading players:", error));
 }
 
+
+function topFunction() {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+}
+
+function editButtonVisibility() {
+    fetch("/api/players")
+        .then(response => response.json())
+        .then(players => {
+            if (players.length == 0){
+                editButton.style.display = "none";
+            }
+            else {
+                editButton.style.display = "block";
+            }
+        })
+}
+
+function addButtonVisibility() {
+    fetch("/api/teams")
+        .then(response => response.json())
+        .then(teams => {
+            console.log(Object.keys(teams).length)
+            if (Object.keys(teams).length == 0){
+                addButton.style.display = "none";
+            }
+            else {
+                addButton.style.display = "block";
+            }
+        })
+}
+
+
+document.addEventListener("DOMContentLoaded", editButtonVisibility());
+document.addEventListener("DOMContentLoaded", addButtonVisibility());
 document.addEventListener("DOMContentLoaded", loadPlayerTable());
 document.addEventListener("DOMContentLoaded", loadTeams());

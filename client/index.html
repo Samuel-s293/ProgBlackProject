@@ -47,21 +47,25 @@
         <div class="row" id = "player-table">
             <div class="col-4">
               <div class="list-group" id="list-players" role="tablist">
-                <a class="list-group-item list-group-item-action" id="p0" data-bs-toggle="list" href="#p0-tab" role="tab" aria-controls="list-home" style="display: none;"></a>
+                
               </div>
             </div>
             <div class="col-8">
               <div class="tab-content" id="tabContent-players">
-                <div class="tab-pane fade show active" id="p0-tab" role="tabpanel" aria-labelledby="p0"></div>
+                
               </div>
             </div>
         </div>
 
-        <div class="container mt-5">
-          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addPlayerModal">
+        <div class="container mt-5 d-flex gap-3" style="margin-left:10px">
+          <button type="button" id="add-button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addPlayerModal">
               Add Player
           </button>
+          <button type="button" id="edit-button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editPlayerModal">
+              Edit Player
+          </button>
         </div>
+
       
         <div class="modal fade" id="addPlayerModal" tabindex="-1" aria-labelledby="addItemModalLabel" aria-hidden="true">
           <div class="modal-dialog">
@@ -74,7 +78,7 @@
                       <form id="add-player" method="post" class="needs-validation" novalidate>
                           <div class="mb-3">
                               <label for="name" class="form-label">Name</label>
-                              <input type="text" class="form-control" id="name" name="name" required>
+                              <input type="text" class="form-control" id="player-name" name="name" required>
                               <div class="invalid-feedback">Please enter player name.</div>
                           </div>
                           <div class="mb-3">
@@ -92,7 +96,41 @@
               </div>
           </div>
         </div>
-          
+
+      
+        <div class="modal fade" id="editPlayerModal" tabindex="-1" aria-labelledby="editItemModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h5 class="modal-title" id="editItemModalLabel">Edit</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                      <form id="edit-player" method="post" class="needs-validation" novalidate>
+                          <div class="mb-3">
+                              <label for="name" class="form-label">Name</label>
+                              <input type="text" class="form-control" id="player-name-edit" name="name" required>
+                              <div class="invalid-feedback">Please enter player name.</div>
+                          </div>
+                          <div class="mb-3">
+                              <label for="goalsScored" class="form-label">Goals Scored</label>
+                              <input type="number" class="form-control" id="goalsScored-edit" name="goalsScored" step="1" required>
+                              <div class="invalid-feedback">Please enter goals scored.</div>
+                          </div>
+                          <h3>Team</h3>
+                          <div class="mb-3" id="teamSelection-edit">
+                            
+                          </div>
+                          <button type="submit" class="btn btn-primary">Save</button>
+                      </form>
+                  </div>
+              </div>
+          </div>
+        </div>
+
+
+
+        <div class="padding"></div>
         <div class="padding"></div>
 
         <h3>Teams</h3>
@@ -101,17 +139,17 @@
         <div class="row" id = "team-table">
           <div class="col-4">
             <div class="list-group" id="list-teams" role="tablist">
-              <a class="list-group-item list-group-item-action" id="t0" data-bs-toggle="list" href="#t0-tab" role="tab" aria-controls="list-home" style="display: none;"></a>
+            
             </div>
           </div>
           <div class="col-8">
             <div class="tab-content" id="tabContent-teams">
-              <div class="tab-pane fade show active" id="t0-tab" role="tabpanel" aria-labelledby="t0"></div>
+        
             </div>
           </div>
         </div>
 
-        <div class="container mt-5">
+        <div class="container mt-5" style="margin-left: 10px">
           <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createTeamModal">
               Create Team
           </button>
@@ -128,7 +166,7 @@
                       <form id="create-team" method="post" class="needs-validation" novalidate>
                           <div class="mb-3">
                               <label for="name" class="form-label">Name</label>
-                              <input type="text" class="form-control" id="name" name="name" required>
+                              <input type="text" class="form-control" id="team-name" name="name" required>
                               <div class="invalid-feedback">Please enter team name.</div>
                           </div>
                           <button type="submit" class="btn btn-primary">Create</button>
@@ -138,13 +176,14 @@
           </div>
         </div>
 
+        <div class="padding"></div>
 
         <div class="card text-center">
             <div class="card-header">End of Page</div>
             <div class="card-body">
               <h5 class="card-title">Created by Samuel Singleton</h5>
               <p class="card-text">As part of the best programming black project of all time</p>
-              <a href="" class="btn btn-primary">Back to top</a>
+              <button onclick="topFunction()" class="btn btn-primary">Back to top</button>
             </div>
             <div class="card-footer text-body-secondary">
               Stats last updated: 1 day ago
