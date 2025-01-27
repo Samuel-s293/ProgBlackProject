@@ -141,5 +141,9 @@ app.get("/api/teams", (req, res) => {
     });
 });
 
+app.get("/server", (req,res) => {
+    res.sendStatus(200)
+})
+
 
 app.listen(8080)
