@@ -8,24 +8,35 @@ app.use(express.static('client'));
 
 app.post("/api/player/add",  function(req, resp){
 
-    let items = [];
+    let players = [];
     if (fs.existsSync("./players.json")) {
         let data = fs.readFileSync("./players.json", "utf8");
         if (data) {
-            items = JSON.parse(data);
+            players = JSON.parse(data);
         }
     }
 
-    let id = items.length + 1;
+    let id = players.length + 1;
 
 
-    let newItem = {"id" : id, "name": req.body.name, "team": req.body.team, "goalsScored": req.body.goalsScored};
+    let newPlayer = {"id" : id, "name": req.body.name, "team": req.body.team, "goalsScored": req.body.goalsScored};
     console.log("New Player Added:");
-    console.log(newItem);
+    console.log(newPlayer);
 
-    items.push(newItem);
-    let itemsText = JSON.stringify(items);
-    fs.writeFileSync("./players.json", itemsText);
+    players.push(newPlayer);
+    let playersText = JSON.stringify(players);
+    fs.writeFileSync("./players.json", playersText);
+
+    if (fs.existsSync("./teams.json")) {
+        let data = fs.readFileSync("./teams.json", "utf8");
+        if (data) {
+            teams = JSON.parse(data);
+        }
+    }
+
+    teams[`${req.body.team}`].push(req.body.name)
+    let teamsText = JSON.stringify(teams);
+    fs.writeFileSync("./teams.json", teamsText)
 
     resp.sendStatus(200)
 })
@@ -50,6 +61,7 @@ app.post("/api/player/edit",  function(req, resp){
     let count = 0
     players.forEach (player =>{
         if (player.id == req.body.id){
+            old_team = player.team
             players[count] = editedItem
             console.log(players)
         }
@@ -58,29 +70,42 @@ app.post("/api/player/edit",  function(req, resp){
     let playersText = JSON.stringify(players);
     fs.writeFileSync("./players.json", playersText);
 
+    if (fs.existsSync("./teams.json")) {
+        let data2 = fs.readFileSync("./teams.json", "utf8");
+        if (data2) {
+            teams = JSON.parse(data2);
+        }
+    }
+
+    index = teams[`${old_team}`].indexOf(req.body.name)
+    teams[`${old_team}`].splice(index,1)
+    teams[`${req.body.team}`].push(req.body.name)
+    let teamsText = JSON.stringify(teams);
+    fs.writeFileSync("./teams.json", teamsText)
+
     resp.sendStatus(200)
 })
 
 
 app.post("/api/team/create",  function(req, resp){
 
-    let items = [];
+    let teams = [];
     if (fs.existsSync("./teams.json")) {
         let data = fs.readFileSync("./teams.json", "utf8");
         if (data) {
-            items = JSON.parse(data);
+            teams = JSON.parse(data);
 
         }
         else {
-            items = {}
+            teams = {}
         }
     }
 
-    items[`${req.body.name}`]=[];
+    teams[`${req.body.name}`]=[];
     console.log("New Team Added:");
     console.log(req.body.name);
-    let itemsText = JSON.stringify(items);
-    fs.writeFileSync("./teams.json", itemsText);
+    let teamsText = JSON.stringify(teams);
+    fs.writeFileSync("./teams.json", teamsText);
 
     resp.sendStatus(200)
 })
@@ -101,33 +126,13 @@ app.get("/api/players", (req, res) => {
 });
 
 app.get("/api/teams", (req, res) => {
-    fs.readFile("./players.json", "utf8", (err, data) => {
+    fs.readFile("./teams.json", "utf8", (err, data) => {
         if (err) {
             res.status(500).json({ error: "Failed to load team data" });
             return;
         }
-        if (fs.existsSync("./teams.json")) {
-            let data2 = fs.readFileSync("./teams.json", "utf8");
-            if (data2) {
-                teamData = JSON.parse(data2);
-                teamNames = Object.keys(teamData)
-                numOfTeams = teamNames.length
-                for (let i=0 ; i<numOfTeams; i++){
-                    team = teamNames[i]
-                    teamData[team] = []
-                }
-    
-            }
-        }
         if (data) {
-            playerData = JSON.parse(data)
-            playerData.forEach(player => {
-                teamData[`${player.team}`].push(player.name)
-            
-            let itemsText = JSON.stringify(teamData);
-            fs.writeFileSync("./teams.json", itemsText);
-            });
-            res.json(teamData);
+            res.json(JSON.parse(data));
         }
         else {
             res.json({})

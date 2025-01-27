@@ -68,8 +68,9 @@ editButton.addEventListener("click", function (event){
                 if (playerTab.classList == "list-group-item list-group-item-action active") {
                     name.value = `${player.name}`
                     goalsScored.value = `${player.goalsScored}`
-                    const teamOption = document.getElementById(`team${player.team}`)
+                    const teamOption = document.getElementById(`team${player.team}-edit`)
                     teamOption.checked = true
+                    console.log(teamOption)
                 }
             })
         })
@@ -174,6 +175,7 @@ function loadTeams() {
 
             teamNames = Object.keys(teams)
             numOfTeams = teamNames.length
+            console.log(teamNames)
 
             for (let i=0 ; i<numOfTeams; i++){
                 // Create list item for the team
@@ -201,7 +203,13 @@ function loadTeams() {
                 option.innerHTML = `<label for="team">${teamNames[i]}</label><input type="radio" id="team${teamNames[i]}" name="team" value="${teamNames[i]}">`
 
                 teamSelection.appendChild(option)
-                teamSelectionEdit.appendChild(option)
+
+                const optionEdit = document.createElement("div")
+                optionEdit.innerHTML = `<label for="team">${teamNames[i]}</label><input type="radio" id="team${teamNames[i]}-edit" name="team" value="${teamNames[i]}">`
+
+                teamSelectionEdit.appendChild(optionEdit)
+
+
                 
 
             };
