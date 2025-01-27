@@ -8,6 +8,15 @@ const modal1 = new bootstrap.Modal(document.getElementById('addPlayerModal'));
 const modal2 = new bootstrap.Modal(document.getElementById('createTeamModal'));
 const modal3 = new bootstrap.Modal(document.getElementById('editPlayerModal'));
 
+function serverDisconnectedMessage() {
+    const errMessage = bootstrap.Toast.getOrCreateInstance(errorMessage)
+    errMessage.show()
+
+    setTimeout(() => {
+        errMessage.hide();
+    }, 10000);
+}
+
 form1.addEventListener("submit", async function (event) {
     event.preventDefault();
     const formData = new FormData(form1);
@@ -34,12 +43,7 @@ form1.addEventListener("submit", async function (event) {
         console.log("ERROR", response)
     }
     catch (error) {
-        const errMessage = bootstrap.Toast.getOrCreateInstance(errorMessage)
-        errMessage.show()
-
-        setTimeout(() => {
-            errMessage.hide();
-        }, 10000);
+        serverDisconnectedMessage()
     }
 
 })
@@ -67,12 +71,7 @@ form2.addEventListener("submit", async function (event) {
         console.log("ERROR", response)
     }
     catch (error) {
-        const errMessage = bootstrap.Toast.getOrCreateInstance(errorMessage)
-        errMessage.show()
-
-        setTimeout(() => {
-            errMessage.hide();
-        }, 10000);
+        serverDisconnectedMessage()
     }
 
 
@@ -85,26 +84,27 @@ editButton.addEventListener("click", function (){
             .then(players => {
                 const name = document.getElementById("player-name-edit")
                 const goalsScored = document.getElementById("goalsScored-edit")
+                const assists = document.getElementById("assists-edit")
+                const cleanSheets = document.getElementById("cleanSheets-edit")
+                
 
                 players.forEach(player => {
                     const playerTab = document.getElementById(`p${player.id}`)
                     if (playerTab.classList == "list-group-item list-group-item-action active") {
                         name.value = `${player.name}`
                         goalsScored.value = `${player.goalsScored}`
+                        assists.value = `${player.assists}`
+                        cleanSheets.value = `${player.cleanSheets}`
+                        const positionOption = document.getElementById(`position-${player.position}-edit`)
+                        positionOption.checked = true
                         const teamOption = document.getElementById(`team${player.team}-edit`)
                         teamOption.checked = true
-                        console.log(teamOption)
                     }
                 })
             })
     }
     catch (error) {
-        const errMessage = bootstrap.Toast.getOrCreateInstance(errorMessage)
-        errMessage.show()
-
-        setTimeout(() => {
-            errMessage.hide();
-        }, 10000);
+        serverDisconnectedMessage()
     }
 })
 
@@ -145,12 +145,7 @@ form3.addEventListener("submit", async function (event) {
             console.log("ERROR", response)
     }
     catch (error) {
-        const errMessage = bootstrap.Toast.getOrCreateInstance(errorMessage)
-        errMessage.show()
-
-        setTimeout(() => {
-            errMessage.hide();
-        }, 10000);
+        serverDisconnectedMessage()
     }
 
 
@@ -183,7 +178,7 @@ function loadPlayerTable() {
                     tabPane.classList.add("tab-pane", "fade");
                     tabPane.id = `p${player.id}-tab`;
                     tabPane.role = "tabpanel";
-                    tabPane.innerHTML = `<h3>${player.name}</h3><p>Goals Scored: ${player.goalsScored}</p>`;
+                    tabPane.innerHTML = `<h3>${player.name}</h3><p>Position: ${player.position}</p><p>Goals Scored: ${player.goalsScored}</p><p>Assists: ${player.assists}</p><p>Clean Sheets: ${player.cleanSheets}</p>`;
 
                     let index = players.indexOf(player)
                     if (index == 0) {
@@ -204,12 +199,7 @@ function loadPlayerTable() {
     }
     
     catch (error) {
-        const errMessage = bootstrap.Toast.getOrCreateInstance(errorMessage)
-        errMessage.show()
-
-        setTimeout(() => {
-            errMessage.hide();
-        }, 10000);
+        serverDisconnectedMessage()
     }
 }
 
@@ -250,7 +240,7 @@ function loadTeams() {
                 console.log(teams[teamNames[i]])
                 let players = ``
                 teams[teamNames[i]].forEach(player => {
-                    players = players.concat(`<p>-${player}</p>`)
+                    players = players.concat(`<p>- ${player}</p>`)
                 })
                 tabPane.innerHTML = `<h3>${teamNames[i]}</h3><div>${players}</div>`;
 
@@ -272,12 +262,7 @@ function loadTeams() {
     }
     
     catch (error) {
-        const errMessage = bootstrap.Toast.getOrCreateInstance(errorMessage)
-        errMessage.show()
-
-        setTimeout(() => {
-            errMessage.hide();
-        }, 10000);
+        serverDisconnectedMessage()
     }
 }
 
@@ -301,12 +286,7 @@ function editButtonVisibility() {
             })
     }
     catch (error) {
-        const errMessage = bootstrap.Toast.getOrCreateInstance(errorMessage)
-        errMessage.show()
-
-        setTimeout(() => {
-            errMessage.hide();
-        }, 10000);
+        serverDisconnectedMessage()
     }
 }
 
@@ -318,19 +298,14 @@ function addButtonVisibility() {
                 console.log(Object.keys(teams).length)
                 if (Object.keys(teams).length == 0){
                     addButton.style.display = "none";
-            }
-            else {
-                addButton.style.display = "block";
-            }
-        })
+                }
+                else {
+                    addButton.style.display = "block";
+                }
+            })
     }
     catch (error) {
-        const errMessage = bootstrap.Toast.getOrCreateInstance(errorMessage)
-        errMessage.show()
-
-        setTimeout(() => {
-            errMessage.hide();
-        }, 10000);
+        serverDisconnectedMessage()
     }
     
 }

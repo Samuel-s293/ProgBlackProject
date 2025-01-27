@@ -16,10 +16,14 @@ app.post("/api/player/add",  function(req, resp){
         }
     }
 
-    let id = players.length + 1;
+    let id = 1
+    if (players.length > 0) {
+        let last_player = players[players.length - 1]
+        id = last_player["id"] + 1;
+    }
 
 
-    let newPlayer = {"id" : id, "name": req.body.name, "team": req.body.team, "goalsScored": req.body.goalsScored};
+    let newPlayer = {"id" : id, "name": req.body.name, "team": req.body.team, "goalsScored": req.body.goalsScored, "position": req.body.position, "assists": req.body.assists, "cleanSheets": req.body.cleanSheets};
     console.log("New Player Added:");
     console.log(newPlayer);
 
@@ -53,7 +57,7 @@ app.post("/api/player/edit",  function(req, resp){
         }
     }
 
-    let editedItem = {"id" : req.body.id, "name": req.body.name, "team": req.body.team, "goalsScored": req.body.goalsScored};
+    let editedItem = {"id" : req.body.id, "name": req.body.name, "team": req.body.team, "goalsScored": req.body.goalsScored, "position": req.body.position, "assists": req.body.assists, "cleanSheets": req.body.cleanSheets};
     console.log("Player Edited:");
     console.log(editedItem);
 
