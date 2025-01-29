@@ -32,15 +32,16 @@ form1.addEventListener("submit", async function (event) {
 
         
         })
-        loadPlayerTable()
-        loadTeams()
-        editButtonVisibility()
 
         if (response.ok){
             modal1.hide();
             form1.reset();
+            loadPlayerTable()
+            loadTeams()
+            editButtonVisibility()
         }
         console.log("ERROR", response)
+
     }
     catch (error) {
         serverDisconnectedMessage()
@@ -61,12 +62,12 @@ form2.addEventListener("submit", async function (event) {
             },
             body: formJSON
         })
-        loadTeams()
-        addButtonVisibility()
 
         if (response.ok){
             modal2.hide();
             form2.reset();
+            loadTeams()
+            addButtonVisibility()
         }
         console.log("ERROR", response)
     }
@@ -124,6 +125,7 @@ form3.addEventListener("submit", async function (event) {
                     }
                 })
             })
+
         
             const formJSON = JSON.stringify(data);
             console.log("Form data", formJSON);
@@ -135,12 +137,12 @@ form3.addEventListener("submit", async function (event) {
                 body: formJSON
                 })
 
-            loadPlayerTable()
-            loadTeams()
 
             if (response.ok){
                 modal3.hide();
                 form3.reset();
+                loadPlayerTable()
+                loadTeams()
             }
             console.log("ERROR", response)
     }
